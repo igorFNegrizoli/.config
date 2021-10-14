@@ -95,15 +95,8 @@ awful.spawn.with_shell(
 
 -- {{{ Variable definitions
 
-local themes = {
-    "multicolor",		-- 1
-    "powerarrow",      		-- 2
-    "powerarrow-black",	 	-- 3
-    "blackburn",		-- 4
-}
-
 -- choose your theme here
-local chosen_theme = themes[3]
+local chosen_theme = "powerarrow-black"
 
 local theme_path = string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme)
 beautiful.init(theme_path)
@@ -115,15 +108,15 @@ local modkey1      = "Control"
 
 -- personal variables
 --change these variables if you want
-local browser1          = "vivaldi-stable"
-local browser2          = "firefox"
-local browser3          = "chromium -no-default-browser-check"
-local editor            = os.getenv("EDITOR") or "nano"
+local browser1          = "qutebrowser"
+local browser2          = "brave"
+local browser3          = "firefox"
+local editor            = "vim" 
 local editorgui         = "atom"
 local filemanager       = "thunar"
-local mailclient        = "evolution"
+local mailclient        = "thunderbird"
 local mediaplayer       = "spotify"
-local terminal          = "urxvt"
+local terminal          = "alacritty"
 local virtualmachine    = "virtualbox"
 
 -- awesome variables
@@ -302,6 +295,18 @@ root.buttons(my_table.join(
 
 -- {{{ Key bindings
 globalkeys = my_table.join(
+--[[
+    -- all minimized clients are restored
+    awful.key({ modkey, "Shift" }, "m", 
+        function()
+	    local tag = awful.tag.selected()
+	        for i=1, #tag:clients() do
+		    tag:clients()[i].minimized=false
+		    tag:clients()[i]:redraw()
+		        end
+	    end,
+    {description= "maximize all clients", group="client"}),
+    ]]
 
     -- {{{ Personal keybindings
     awful.key({ modkey }, "w", function () awful.util.spawn( browser1 ) end,
